@@ -15,6 +15,7 @@ public class Game extends PApplet {
         player1 = new Player(true, this);
         player2 = new Player(false, this);
         Tower.setupMainTowers(player1, player2, this);
+        player1.addTroop(new HogRider(true,width/2+50, height/2-100, this));
 
     }
     public void draw(){

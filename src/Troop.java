@@ -38,9 +38,11 @@ public class Troop {
         //find the angle
         double angle;
         Troop nearestEntity = getNearestEntity(troopList);
-        float smallestEntityDistance = Game.dist(this.x,this.y, nearestEntity.x, nearestEntity.y);
+        float smallestEntityDistance = Game.dist(nearestEntity.x, nearestEntity.y, this.x, this.y);
+
 
         angle = Math.acos(((nearestEntity.x-this.x)/(smallestEntityDistance)));
+        if(this.y > nearestEntity.y) angle *=-1;
 
         // move speed units along that axis per second
 
@@ -52,12 +54,12 @@ public class Troop {
 
         //find nearest tower
         float smallestTroopDistance = Float.MAX_VALUE;
-        Troop closestTroop = troopList.get(0);
+        Troop closestTroop = null;
 
         for(Troop troop: troopList) {
-            if(!(troop instanceof Tower)) if(tank) continue;
+            if(!(troop instanceof Tower)) {if(tank) continue;}
             float dist = Game.dist(this.x, this.y, troop.x, troop.y);
-            if (dist < smallestTroopDistance && troop.owner != this.owner) {
+            if (dist < smallestTroopDistance && troop.owner != this.owner && !troop.equals(this)) {
                 smallestTroopDistance = dist;
                 closestTroop = troop;
             }
@@ -66,7 +68,7 @@ public class Troop {
     }
     public void draw() {
         game.fill(255);
-        game.ellipse(this.x,this.y,this.health, this.health);
+        game.ellipse(this.x,this.y,this.health/50, this.health/50);
         game.textAlign(game.CENTER, game.CENTER);
         game.textSize(14);
         game.fill(0);
