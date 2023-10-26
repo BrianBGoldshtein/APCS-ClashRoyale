@@ -10,16 +10,25 @@ public class Game extends PApplet {
         size(600,800);
     }
     public void setup(){
-        frameRate(20);
-        background(0,255,0);
+        frameRate(60);
+        background(0,100,0);
         player1 = new Player(true, this);
         player2 = new Player(false, this);
         Tower.setupMainTowers(player1, player2, this);
         player1.addTroop(new HogRider(true,width/2+50, height/2-100, this));
+        player2.addTroop(new Skeleton(false,width/2-50, height/2-80, this));
+        player2.addTroop(new Skeleton(false,width/2-200, height/2-200, this));
+        player2.addTroop(new Skeleton(false,width/2-60, height/2-80, this));
+        player2.addTroop(new Skeleton(false,width/2-180, height/2-200, this));
+        player2.addTroop(new Skeleton(false,width/2-190, height/2-200, this));
+        player2.addTroop(new Skeleton(false,width/2-60, height/2-110, this));
+        player2.addTroop(new Skeleton(false,width/2-180, height/2-240, this));
+        //hello there
+
 
     }
     public void draw(){
-        background(0,255,0);
+        background(50,150,50);
         player1.update(player2);
         player2.update(player1);
     }

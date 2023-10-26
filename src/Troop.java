@@ -10,6 +10,7 @@ public class Troop {
     // ice spirit
     // skeletons
     protected int elixirPrice, health, damage, shotRange, cooldown;
+    protected boolean attackedThisTick;
     protected float x, y, speed;
     protected boolean owner, tank, alive;
     protected Game game;
@@ -26,28 +27,39 @@ public class Troop {
         this.game = game;
         this. x = x;
         this.y = y;
+        attackedThisTick = false;
 
     }
 
-    public void attack(Game game) {
+    public void attack(Troop nearest) {
+        if (Game.tick % cooldown == 0 && Game.dist(x,y,nearest.x,nearest.y)-getSize()/2.0 - nearest.getSize()/2.0 <= shotRange && !attackedThisTick) {
+            nearest.health -= damage;
+            attackedThisTick = true;
+        }
     }
 
-    public void move(ArrayList<Troop> troopList) {
+    public void act(ArrayList<Troop> ourTroops, ArrayList<Troop> otherTroopList) {
+        Troop nearestEntity = getNearestEntity(otherTroopList);
+        move(nearestEntity);
+        collisionFix(ourTroops, otherTroopList);
+        attack(nearestEntity);
+        draw();
+        attackedThisTick=false;
+    }
 
-
-        //find the angle
-        double angle;
-        Troop nearestEntity = getNearestEntity(troopList);
+    public void move(Troop nearestEntity) {
         float smallestEntityDistance = Game.dist(nearestEntity.x, nearestEntity.y, this.x, this.y);
-
-
-        angle = Math.acos(((nearestEntity.x-this.x)/(smallestEntityDistance)));
+        double angle = Math.acos(((nearestEntity.x-this.x)/(smallestEntityDistance)));
         if(this.y > nearestEntity.y) angle *=-1;
-
         // move speed units along that axis per second
 
-        x+= Math.cos(angle)*this.speed;
-        y+= Math.sin(angle)*this.speed;
+        if (Math.abs(smallestEntityDistance - nearestEntity.getSize()/2.0 - this.getSize()/2.0) > this.speed) {
+            x += Math.cos(angle) * this.speed;
+            y += Math.sin(angle) * this.speed;
+        } else if (Math.abs(smallestEntityDistance) > nearestEntity.getSize()/2 + this.getSize()/2) {
+            x += Math.cos(angle) * Math.abs(smallestEntityDistance-nearestEntity.getSize()/2.0 - this.getSize()/2.0);
+            y += Math.sin(angle) * Math.abs(smallestEntityDistance-nearestEntity.getSize()/2.0 - this.getSize()/2.0);
+        }
     }
     public Troop getNearestEntity(ArrayList<Troop> troopList) {
         //GET BACK HERE AND REVISE PLS PLS DANKE
@@ -66,23 +78,46 @@ public class Troop {
         }
         return closestTroop;
     }
+
+    public float getSize() {
+        return this.health/100 + 30;
+    }
     public void draw() {
-        game.fill(255);
-        game.ellipse(this.x,this.y,this.health/50, this.health/50);
-        game.textAlign(game.CENTER, game.CENTER);
-        game.textSize(14);
-        game.fill(0);
-        game.text(this.health, this.x, this.y);
+            if(owner) game.fill(255,0,0);
+            else game.fill(0,0,255);
+            game.ellipse(this.x, this.y, this.getSize(), this.getSize());
+            game.textAlign(game.CENTER, game.CENTER);
+            game.textSize(14);
+            game.fill(255);
+            game.text(this.health, this.x, this.y);
+
     }
 
-    public void act(ArrayList<Troop> troopList) {
-        move(troopList);
-        draw();
+    public void collisionFix(ArrayList<Troop> troops1, ArrayList<Troop> troops2) {
+        ArrayList<Troop> troops = new ArrayList<>();
+        troops.addAll(troops1);
+        troops.addAll(troops2);
+        for(Troop otherTroop: troops) {
+                if(otherTroop == this) continue;
+                if(isCollided(this,otherTroop)) {
+                    double distance = (Game.dist(x,y,otherTroop.x, otherTroop.y));
+                    double angle = Math.acos(((otherTroop.x-this.x)/distance));
+                    if(this.y > otherTroop.y) angle *=-1;
+
+                    x -= Math.cos(angle) * Math.abs(distance-otherTroop.getSize()/2.0 - this.getSize()/2.0);
+                    y -= Math.sin(angle) * Math.abs(distance-otherTroop.getSize()/2.0 - this.getSize()/2.0);
+
+
+
+
+
+                }
+        }
     }
 
 
-    public boolean collisionDetection(float x1, float y1, float r1, float x2, float y2, float r2) {
-        return Game.dist(x1,y1,x2,y2) <= r1 + r2;
+    public boolean isCollided(Troop t1, Troop t2) {
+        return Game.dist(t1.x,t1.y,t2.x,t2.y) <= t1.getSize()/2.0 + t2.getSize()/2.0;
     }
 
 
