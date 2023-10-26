@@ -64,7 +64,7 @@ public class Troop {
     public Troop getNearestEntity(ArrayList<Troop> troopList) {
         //GET BACK HERE AND REVISE PLS PLS DANKE
 
-        //find nearest tower
+        //find the nearest tower
         float smallestTroopDistance = Float.MAX_VALUE;
         Troop closestTroop = null;
 

@@ -6,6 +6,7 @@ public class Game extends PApplet {
     public static final int MEDIUM = 2;
     public static final int FAST = 3;
     public static final int SUPER_FAST = 4;
+    public static int tick;
     public void settings(){
         size(600,800);
     }
@@ -31,6 +32,7 @@ public class Game extends PApplet {
         background(50,150,50);
         player1.update(player2);
         player2.update(player1);
+        tick++;
     }
 
 
