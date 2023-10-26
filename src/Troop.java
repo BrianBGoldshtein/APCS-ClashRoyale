@@ -98,20 +98,15 @@ public class Troop {
         troops.addAll(troops1);
         troops.addAll(troops2);
         for(Troop otherTroop: troops) {
-                if(otherTroop == this) continue;
-                if(isCollided(this,otherTroop)) {
-                    double distance = (Game.dist(x,y,otherTroop.x, otherTroop.y));
-                    double angle = Math.acos(((otherTroop.x-this.x)/distance));
-                    if(this.y > otherTroop.y) angle *=-1;
+            if (otherTroop == this) continue;
+            if (isCollided(this, otherTroop)) {
+                double distance = (Game.dist(x, y, otherTroop.x, otherTroop.y));
+                double angle = Math.acos(((otherTroop.x - this.x) / distance));
+                if (this.y > otherTroop.y) angle *= -1;
 
-                    x -= Math.cos(angle) * Math.abs(distance-otherTroop.getSize()/2.0 - this.getSize()/2.0);
-                    y -= Math.sin(angle) * Math.abs(distance-otherTroop.getSize()/2.0 - this.getSize()/2.0);
-
-
-
-
-
-                }
+                x -= Math.cos(angle) * Math.abs(distance - otherTroop.getSize() / 2.0 - this.getSize() / 2.0);
+                y -= Math.sin(angle) * Math.abs(distance - otherTroop.getSize() / 2.0 - this.getSize() / 2.0);
+            }
         }
     }
 

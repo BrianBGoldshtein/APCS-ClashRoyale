@@ -23,6 +23,8 @@ public class Player {
 
     public void update(Player other) {
         ArrayList<Troop> deadTroops = new ArrayList<>();
+        if(other.troopList.isEmpty()) Game.gameOver(this);
+
         for (Troop t : troopList) {
             t.act(troopList, other.troopList);
             //check for dead ones

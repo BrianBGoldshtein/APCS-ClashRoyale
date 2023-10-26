@@ -1,3 +1,4 @@
+import com.sun.xml.internal.bind.v2.runtime.output.SAXOutput;
 import processing.core.PApplet;
 
 public class Game extends PApplet {
@@ -7,6 +8,12 @@ public class Game extends PApplet {
     public static final int FAST = 3;
     public static final int SUPER_FAST = 4;
     public static int tick;
+
+    public static void gameOver(Player winner) {
+        System.out.println("Game Over! Player " + winner + " won!");
+        System.exit(0);
+    }
+
     public void settings(){
         size(600,800);
     }
@@ -17,14 +24,14 @@ public class Game extends PApplet {
         player2 = new Player(false, this);
         Tower.setupMainTowers(player1, player2, this);
         player1.addTroop(new HogRider(true,width/2+50, height/2-100, this));
-        player2.addTroop(new Skeleton(false,width/2-50, height/2-80, this));
-        player2.addTroop(new Skeleton(false,width/2-200, height/2-200, this));
-        player2.addTroop(new Skeleton(false,width/2-60, height/2-80, this));
-        player2.addTroop(new Skeleton(false,width/2-180, height/2-200, this));
+        player2.addTroop(new HogRider(false,width/2-50, height/2-80, this));
+        player2.addTroop(new HogRider(false,width/2-200, height/2-200, this));
+        player2.addTroop(new HogRider(false,width/2-60, height/2-80, this));
+        player2.addTroop(new HogRider(false,width/2-180, height/2-200, this));
         player2.addTroop(new Skeleton(false,width/2-190, height/2-200, this));
         player2.addTroop(new Skeleton(false,width/2-60, height/2-110, this));
         player2.addTroop(new Skeleton(false,width/2-180, height/2-240, this));
-        //hello there
+
 
 
     }
