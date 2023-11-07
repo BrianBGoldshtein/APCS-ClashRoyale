@@ -12,9 +12,10 @@ public class Troop {
     protected int elixirPrice, health, damage, shotRange, cooldown;
     protected boolean attackedThisTick;
     protected float x, y, speed;
-    protected boolean owner, tank, alive;
+    protected boolean tank, alive;
+    protected Player owner;
     protected Game game;
-    public Troop(boolean owner, int elixirPrice, int health, int damage, int shotRange, int cooldown, float speed, boolean tank, Game game, float x, float y) {
+    public Troop(Player owner, int elixirPrice, int health, int damage, int shotRange, int cooldown, float speed, boolean tank, Game game, float x, float y) {
         this.owner = owner;
         this.elixirPrice = elixirPrice;
         this.health = health;
@@ -48,6 +49,7 @@ public class Troop {
     }
 
     public void move(Troop nearestEntity) {
+        if(nearestEntity == null) Game.gameOver(this.owner);
         float smallestEntityDistance = Game.dist(nearestEntity.x, nearestEntity.y, this.x, this.y);
         double angle = Math.acos(((nearestEntity.x-this.x)/(smallestEntityDistance)));
         if(this.y > nearestEntity.y) angle *=-1;
@@ -83,8 +85,7 @@ public class Troop {
         return this.health/100 + 30;
     }
     public void draw() {
-            if(owner) game.fill(255,0,0);
-            else game.fill(0,0,255);
+            game.fill(owner.getColor());
             game.ellipse(this.x, this.y, this.getSize(), this.getSize());
             game.textAlign(game.CENTER, game.CENTER);
             game.textSize(14);

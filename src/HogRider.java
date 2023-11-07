@@ -6,7 +6,7 @@ public class HogRider extends Troop{
     private static final int COOLDOWN = 96;
     private static final int SPEED = Game.SUPER_FAST;
 
-    public HogRider(boolean owner, float x, float y, Game game) {
-        super(owner, PRICE, STARTING_HEALTH, DAMAGE, SHOT_RANGE, COOLDOWN, SPEED, false, game, x, y);
+    public HogRider(Player owner, float x, float y, Game game) {
+        super(owner, PRICE, STARTING_HEALTH, DAMAGE, SHOT_RANGE, COOLDOWN, SPEED, true, game, x, y);
     }
 }

@@ -6,7 +6,7 @@ public class Skeleton extends Troop{
     private static final int COOLDOWN = 60;
     private static final int SPEED = Game.FAST;
 
-    public Skeleton(boolean owner, float x, float y, Game game) {
+    public Skeleton(Player owner, float x, float y, Game game) {
         super(owner, PRICE, STARTING_HEALTH, DAMAGE, SHOT_RANGE, COOLDOWN, SPEED, false, game, x, y);
     }
 }

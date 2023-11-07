@@ -20,17 +20,16 @@ public class Game extends PApplet {
     public void setup(){
         frameRate(60);
         background(0,100,0);
-        player1 = new Player(true, this);
-        player2 = new Player(false, this);
+        player1 = new Player(this, color(255,0,0));
+        player2 = new Player(this, color(0,0,255));
         Tower.setupMainTowers(player1, player2, this);
-        player1.addTroop(new HogRider(true,width/2+50, height/2-100, this));
-        player2.addTroop(new HogRider(false,width/2-50, height/2-80, this));
-        player2.addTroop(new HogRider(false,width/2-200, height/2-200, this));
-        player2.addTroop(new HogRider(false,width/2-60, height/2-80, this));
-        player2.addTroop(new HogRider(false,width/2-180, height/2-200, this));
-        player2.addTroop(new Skeleton(false,width/2-190, height/2-200, this));
-        player2.addTroop(new Skeleton(false,width/2-60, height/2-110, this));
-        player2.addTroop(new Skeleton(false,width/2-180, height/2-240, this));
+        player1.addTroop(new HogRider(player1,width/2+50, height/2-56, this));
+        player1.addTroop(new HogRider(player1,width/2+50, height/2-57, this));
+        player1.addTroop(new HogRider(player1,width/2+50, height/2-54, this));
+        player1.addTroop(new HogRider(player1,width/2+50, height/2-53, this));
+
+
+        player2.addTroop(new Skeleton(player2,width/2-180, height/2-240, this));
 
 
 
