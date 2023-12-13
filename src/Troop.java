@@ -47,7 +47,7 @@ public class Troop {
     }
 
     public void move(Troop nearestEntity) {
-        if(nearestEntity == null) Game.gameOver(this.owner);
+        if(nearestEntity == null) return;
         float smallestEntityDistance = Game.dist(nearestEntity.x, nearestEntity.y, this.x, this.y);
         double angle = Math.acos(((nearestEntity.x-this.x)/(smallestEntityDistance)));
         if(this.y > nearestEntity.y) angle *=-1;

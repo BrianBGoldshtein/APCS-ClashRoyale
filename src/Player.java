@@ -14,12 +14,18 @@ public class Player {
 
     private String name;
 
+    public Troop mainTower;
+
     public Player(String name,Game game, int color) {
         this.name = name;
         troopList = new ArrayList<>();
         this.game = game;
         this.color = color;
         deck = new Deck(this);
+    }
+
+    public ArrayList<Troop> getTroopList() {
+        return troopList;
     }
 
     public String getName() {

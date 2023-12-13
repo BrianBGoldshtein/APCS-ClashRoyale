@@ -19,6 +19,9 @@ public class Tower extends Troop{
 
     public static void setupMainTowers(Player p1, Player p2, Game game) {
         p1.addTroop(new Tower(p1, Integer.MAX_VALUE, Player.STARTING_HEALTH, Player.MAIN_TOWER_DAMAGE, Player.MAIN_TOWER_SHOTRANGE, Player.MAIN_TOWER_COOLDOWN,game, game.width/2, game.height-10));
+        p1.mainTower = p1.getTroopList().get(p1.getTroopList().size()-1);
         p2.addTroop(new Tower(p2, Integer.MAX_VALUE, Player.STARTING_HEALTH, Player.MAIN_TOWER_DAMAGE, Player.MAIN_TOWER_SHOTRANGE, Player.MAIN_TOWER_COOLDOWN,game, game.width/2, 10));
+        p2.mainTower = p2.getTroopList().get(p2.getTroopList().size()-1);
+
     }
 }
