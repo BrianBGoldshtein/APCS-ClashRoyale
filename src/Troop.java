@@ -15,6 +15,9 @@ public class Troop {
     protected boolean tank, alive;
     protected Player owner;
     protected Game game;
+
+    public static final String[] CARDS = {"HogRider", "Skeletons", "Cannon", "Musketeer", "EliteBarbarians", "Knight", "IceGolem"};
+
     public Troop(Player owner, int elixirPrice, int health, int damage, int shotRange, int cooldown, float speed, boolean tank, Game game, float x, float y) {
         this.owner = owner;
         this.elixirPrice = elixirPrice;
@@ -32,6 +35,9 @@ public class Troop {
 
     }
 
+    public int getElixirPrice() {
+        return elixirPrice;
+    }
     public void attack(Troop nearest) {
         if (Game.tick % cooldown == 0 && Game.dist(x,y,nearest.x,nearest.y)-getSize()/2.0 - nearest.getSize()/2.0 <= shotRange && !attackedThisTick) {
             nearest.health -= damage;
@@ -98,17 +104,30 @@ public class Troop {
         ArrayList<Troop> troops = new ArrayList<>();
         troops.addAll(troops1);
         troops.addAll(troops2);
-        for(Troop otherTroop: troops) {
+        loop: for(Troop otherTroop: troops) {
             if (otherTroop == this) continue;
             if (isCollided(this, otherTroop)) {
                 double distance = (Game.dist(x, y, otherTroop.x, otherTroop.y));
                 double angle = Math.acos(((otherTroop.x - this.x) / distance));
                 if (this.y > otherTroop.y) angle *= -1;
-
+                if(this instanceof Tower) continue loop;
                 x -= Math.cos(angle) * Math.abs(distance - otherTroop.getSize() / 2.0 - this.getSize() / 2.0);
                 y -= Math.sin(angle) * Math.abs(distance - otherTroop.getSize() / 2.0 - this.getSize() / 2.0);
             }
         }
+    }
+
+
+    public String getName() {
+        if(this instanceof Tower) return "Tower";
+        if(this instanceof HogRider) return "HogRider";
+        if(this instanceof Skeleton) return "Skeletons";
+        if(this instanceof Cannon) return "Cannon";
+        if(this instanceof Musketeer) return "Musketeer";
+        if(this instanceof Knight) return "Knight";
+        if(this instanceof EliteBarbarians) return "ELiteBarbarians";
+        if(this instanceof IceGolem) return "IceGolem";
+        return null;
     }
 
 

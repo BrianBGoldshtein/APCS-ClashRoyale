@@ -2,15 +2,16 @@ import com.sun.xml.internal.bind.v2.runtime.output.SAXOutput;
 import processing.core.PApplet;
 
 public class Game extends PApplet {
-    Player player1; Player player2;
+    Player humanPlayer; Player AI;
     public static final int SLOW = 1;
     public static final int MEDIUM = 2;
     public static final int FAST = 3;
     public static final int SUPER_FAST = 4;
     public static int tick;
 
+
     public static void gameOver(Player winner) {
-        System.out.println("Game Over! Player " + winner + " won!");
+        System.out.println("Game Over! " + winner.getName() + " won!");
         System.exit(0);
     }
 
@@ -18,28 +19,39 @@ public class Game extends PApplet {
         size(600,800);
     }
     public void setup(){
+        getSurface().setLocation(0,0);
         frameRate(60);
         background(0,100,0);
-        player1 = new Player(this, color(255,0,0));
-        player2 = new Player(this, color(0,0,255));
-        Tower.setupMainTowers(player1, player2, this);
-        player1.addTroop(new HogRider(player1,width/2+50, height/2-56, this));
-        player1.addTroop(new HogRider(player1,width/2+50, height/2-57, this));
-        player1.addTroop(new HogRider(player1,width/2+50, height/2-54, this));
-        player1.addTroop(new HogRider(player1,width/2+50, height/2-53, this));
-
-
-        player2.addTroop(new Skeleton(player2,width/2-180, height/2-240, this));
+        humanPlayer = new Player("Human Player",this, color(255,0,0));
+        AI = new Player("AI",this, color(0,0,255));
+        Tower.setupMainTowers(humanPlayer, AI, this);
 
 
 
+
+    }
+
+
+    public void mouseReleased() {
+
+        if(mouseY > height/2) humanPlayer.spawn(mouseX, mouseY);
     }
     public void draw(){
-        background(50,150,50);
-        player1.update(player2);
-        player2.update(player1);
-        tick++;
+            background(50, 150, 50);
+            humanPlayer.update(AI);
+            AI.update(humanPlayer);
+
+        if(!humanPlayer.getDeck().lastButtonPressed.equals("")) {
+            fill(0,90);
+            stroke(0,90);
+            rect(0, 0, width, height/2);
+        }
+
+            tick++;
+
     }
+
+
 
 
     public static void main(String[] args) {

@@ -1,5 +1,5 @@
 public class HogRider extends Troop{
-    private static final int PRICE = 4;
+    public static final int PRICE = 4;
     private static final int STARTING_HEALTH = 1696;
     private static final int DAMAGE = 318;
     private static final int SHOT_RANGE = 1;
@@ -9,4 +9,6 @@ public class HogRider extends Troop{
     public HogRider(Player owner, float x, float y, Game game) {
         super(owner, PRICE, STARTING_HEALTH, DAMAGE, SHOT_RANGE, COOLDOWN, SPEED, true, game, x, y);
     }
+
+
 }
