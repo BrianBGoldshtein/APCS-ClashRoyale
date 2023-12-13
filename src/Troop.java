@@ -1,14 +1,6 @@
 import java.util.ArrayList;
 
 public class Troop {
-    // hog rider
-    // log
-    // ice golem
-    // musketeer
-    // fireball
-    // cannon
-    // ice spirit
-    // skeletons
     protected int elixirPrice, health, damage, shotRange, cooldown;
     protected boolean attackedThisTick;
     protected float x, y, speed;

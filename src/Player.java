@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Player {
     public static final int MAIN_TOWER_DAMAGE = 110;
-    public static final int MAIN_TOWER_SHOTRANGE = 70;
+    public static final int MAIN_TOWER_SHOTRANGE = 150;
     public static final int MAIN_TOWER_COOLDOWN = 60;
 
     public Game game;
@@ -42,6 +42,12 @@ public class Player {
         troopList.add(new Skeleton(this, x+1, y+1, game));
         troopList.add(new Skeleton(this, x-1, y+1, game));
     }
+    public void spawnKnight(float x, float y) { troopList.add(new Knight(this, x, y, game)); }
+    public void spawnEliteBarbarians(float x, float y) {
+        troopList.add(new EliteBarbarians(this, x, y, game));
+        troopList.add(new EliteBarbarians(this, x, y, game));
+    }
+    public void spawnIceGolem(float x, float y) { troopList.add(new IceGolem(this, x, y, game)); }
 
 
     public void addTroop(Troop t) {

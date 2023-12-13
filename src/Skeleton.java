@@ -7,9 +7,10 @@ public class Skeleton extends Troop{
     private static final int SHOT_RANGE = 1;
     private static final int COOLDOWN = 60;
     private static final int SPEED = Game.FAST;
+    private static final boolean TANK = false;
 
     public Skeleton(Player owner, float x, float y, Game game) {
-        super(owner, PRICE, STARTING_HEALTH, DAMAGE, SHOT_RANGE, COOLDOWN, SPEED, false, game, x, y);
+        super(owner, PRICE, STARTING_HEALTH, DAMAGE, SHOT_RANGE, COOLDOWN, SPEED, TANK, game, x, y);
     }
 
 }
