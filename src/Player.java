@@ -77,9 +77,6 @@ public class Player {
         for(Troop t: deadTroops) {
             troopList.remove(t);
         }
-
-
-
     }
 
     public int getColor() {
@@ -88,31 +85,15 @@ public class Player {
 
 
     public void spawn(int x, int y) {
-        if(deck.lastButtonPressed == "") return;
-
-        if(deck.lastButtonPressed.equals("HogRider")) {
-            spawnHogRider(x,y);
-        }
-        else if(deck.lastButtonPressed.equals("Skeletons")) {
-            spawnSkeletons(x,y);
-        }
-        else if(deck.lastButtonPressed.equals("Cannon")) {
-            spawnCannon(x,y);
-        }
-        else if(deck.lastButtonPressed.equals("Musketeer")) {
-            spawnMusketeer(x,y);
-        }
-        else if(deck.lastButtonPressed.equals("IceGolem")) {
-            spawnIceGolem(x,y);
-        }
-        else if(deck.lastButtonPressed.equals("EliteBarbarians")) {
-            spawnEliteBarbarians(x,y);
-        }
-        else if(deck.lastButtonPressed.equals("Knight")) {
-            spawnKnight(x,y);
-        }
+        if(deck.lastButtonPressed.equals("")) return;
+        if(deck.lastButtonPressed.equals("HogRider")) spawnHogRider(x,y);
+        else if(deck.lastButtonPressed.equals("Skeletons")) spawnSkeletons(x,y);
+        else if(deck.lastButtonPressed.equals("Cannon")) spawnCannon(x,y);
+        else if(deck.lastButtonPressed.equals("Musketeer")) spawnMusketeer(x,y);
+        else if(deck.lastButtonPressed.equals("IceGolem")) spawnIceGolem(x,y);
+        else if(deck.lastButtonPressed.equals("EliteBarbarians")) spawnEliteBarbarians(x,y);
+        else if(deck.lastButtonPressed.equals("Knight")) spawnKnight(x,y);
         deck.lastButtonPressed = "";
-
     }
 
     public Deck getDeck() {

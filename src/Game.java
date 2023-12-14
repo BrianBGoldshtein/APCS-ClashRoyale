@@ -1,8 +1,11 @@
 import com.sun.xml.internal.bind.v2.runtime.output.SAXOutput;
 import processing.core.PApplet;
+import processing.core.PImage;
 
 public class Game extends PApplet {
-    Player humanPlayer; Player AI;
+    public PImage Cannon, EliteBarbarians, HogRider, IceGolem, KingTower, Knight, Musketeer, Skeletons;
+    Player humanPlayer;
+    Player AI;
     public static final int SLOW = 1;
     public static final int MEDIUM = 2;
     public static final int FAST = 3;
@@ -13,10 +16,9 @@ public class Game extends PApplet {
 
     public boolean paused = false;
 
-
-    public static void gameOver(Player winner) {
-        System.out.println("Game Over! " + winner.getName() + " won!");
-        System.exit(0);
+    public void gameOver(Player winner) {
+        paused = true;
+        this.winner = winner;
     }
 
     public void settings() {
@@ -39,16 +41,10 @@ public class Game extends PApplet {
         humanPlayer = new Player("Human Player", this, color(137, 207, 240));
         AI = new Player("AI", this, color(226, 134, 129));
         Tower.setupMainTowers(humanPlayer, AI, this);
-
-
-
-
     }
 
-
     public void mouseReleased() {
-
-        if(mouseY > height/2) humanPlayer.spawn(mouseX, mouseY);
+        if (mouseY > height / 2) humanPlayer.spawn(mouseX, mouseY);
     }
 
     public void draw() {
@@ -76,13 +72,7 @@ public class Game extends PApplet {
         }
     }
 
-
-
-
     public static void main(String[] args) {
         PApplet.main("Game");
-
     }
-
-
 }
