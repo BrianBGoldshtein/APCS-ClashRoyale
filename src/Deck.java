@@ -47,7 +47,7 @@ public class Deck {
 
         if (owner.game.tick % 168 == 0) elixir++;
         display.showElixir(elixir);
-        System.out.println(lastButtonPressed);
+        elixir = elixir % 11;
     }
 
     public boolean useCard(String text, int x, int y) {
@@ -167,6 +167,7 @@ class AsyncPopUp {
     JProgressBar jProgressBar;
     JFrame frame;
     Deck deck;
+    Thread t;
     AsyncPopUp(Deck d) {
         this.deck = d;
         frame = new JFrame("");
@@ -188,8 +189,7 @@ class AsyncPopUp {
 
     }
     public void showMessage() {
-
-        Thread t = new Thread(new Runnable() {
+        t = new Thread(new Runnable() {
             @Override
             public void run() {
 
@@ -200,7 +200,7 @@ class AsyncPopUp {
                 deck.deckSpawningSelected = true;
             }
         });
-        t.start();
+        if((deck.getOwner().getName().equals("Human Player") && deck.lastButtonPressed.equals(""))) t.start();
     }
 
     public void showElixir(int i) {
@@ -218,6 +218,7 @@ class AsyncPopUp {
         }
 
         addCard(added);
+
 
     }
 

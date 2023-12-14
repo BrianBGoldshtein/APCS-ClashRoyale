@@ -95,7 +95,7 @@ public class Troop {
     }
     public void draw() {
         game.fill(owner.getColor());
-        game.ellipse(this.x, this.y, this.getSize()+5, this.getSize()+5);
+        game.ellipse(this.x, this.y, this.getSize(), this.getSize());
 
         //
 
@@ -114,9 +114,9 @@ public class Troop {
         if (image == null) return;
         PImage resizedImage = new PImage(image.getImage());
 
-        resizedImage.resize((int) this.getSize()-6, (int) this.getSize()-6);
+        resizedImage.resize((int) this.getSize()-10, (int) this.getSize()-10);
 
-        game.image(resizedImage, this.x-((int)this.getSize() / 2) + 3, this.y-((int)this.getSize() / 2) + 3);
+        game.image(resizedImage, this.x-((int)this.getSize() / 2) + 5, this.y-((int)this.getSize() / 2) + 5);
 
 
 

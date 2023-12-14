@@ -67,10 +67,12 @@ public class Player {
         Projectile.update();
 
         for (Troop t : troopList) {
+            if(t.health<=0) deadTroops.add(t);
             t.act(troopList, other.troopList);
             //check for dead ones
-            if(t.health<=0) deadTroops.add(t);
         }
+        for(Troop t: troopList) if(t.health<=0 && !deadTroops.contains(t)) deadTroops.add(t);
+
         //remove all dead ones
         for(Troop t: deadTroops) {
             troopList.remove(t);
