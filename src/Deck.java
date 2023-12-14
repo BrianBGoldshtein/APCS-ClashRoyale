@@ -98,7 +98,7 @@ public class Deck {
 
             elixir-= price;
 
-            display.updatePane();
+            display.updatePane(text, newCard);
 
             owner.spawn(x,y);
         }
@@ -152,7 +152,7 @@ public class Deck {
 
             elixir-= price;
 
-            display.updatePane();
+            display.updatePane(text, newCard);
         }
         return true;
     }
@@ -208,12 +208,16 @@ class AsyncPopUp {
 
     }
 
-    public void updatePane() {
-        pane.removeAll();
-        pane.add(jProgressBar);
-        for(String card: deck.availableCards) {
-            addCard(card);
+    public void updatePane(String removed, String added) {
+
+        for(Component c: pane.getComponents()) {
+            if(!(c instanceof JButton)) continue;
+
+            JButton b = (JButton) c;
+            if(b.getText().equals(removed)) pane.remove(b);
         }
+
+        addCard(added);
 
     }
 

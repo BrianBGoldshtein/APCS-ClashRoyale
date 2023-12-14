@@ -7,7 +7,7 @@ public class Player {
 
     public Game game;
     private ArrayList<Troop> troopList;
-    public static final int STARTING_HEALTH = 10000;
+    public static final int STARTING_HEALTH = 5000;
     private int color;
 
     private Deck deck;

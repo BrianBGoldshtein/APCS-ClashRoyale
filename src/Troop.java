@@ -1,6 +1,10 @@
 import java.util.ArrayList;
 
+import processing.core.PApplet;
+import processing.core.*;
+
 public class Troop {
+
     protected int elixirPrice, health, damage, shotRange, cooldown;
     protected boolean attackedThisTick;
     protected float x, y, speed;
@@ -27,6 +31,10 @@ public class Troop {
 
     }
 
+    public int getHealth() {
+        return health;
+    }
+
     public int getElixirPrice() {
         return elixirPrice;
     }
@@ -39,6 +47,10 @@ public class Troop {
 
     public void act(ArrayList<Troop> ourTroops, ArrayList<Troop> otherTroopList) {
         Troop nearestEntity = getNearestEntity(otherTroopList);
+        if(nearestEntity == null) {
+            game.gameOver(this.owner);
+            return;
+        }
         move(nearestEntity);
         collisionFix(ourTroops, otherTroopList);
         attack(nearestEntity);
@@ -47,7 +59,8 @@ public class Troop {
     }
 
     public void move(Troop nearestEntity) {
-        if(nearestEntity == null) return;
+
+
         float smallestEntityDistance = Game.dist(nearestEntity.x, nearestEntity.y, this.x, this.y);
         double angle = Math.acos(((nearestEntity.x-this.x)/(smallestEntityDistance)));
         if(this.y > nearestEntity.y) angle *=-1;
@@ -62,8 +75,6 @@ public class Troop {
         }
     }
     public Troop getNearestEntity(ArrayList<Troop> troopList) {
-        //GET BACK HERE AND REVISE PLS PLS DANKE
-
         //find the nearest tower
         float smallestTroopDistance = Float.MAX_VALUE;
         Troop closestTroop = null;
@@ -80,15 +91,34 @@ public class Troop {
     }
 
     public float getSize() {
-        return this.health/100 + 30;
+        return this.health/50 + 50;
     }
     public void draw() {
-            game.fill(owner.getColor());
-            game.ellipse(this.x, this.y, this.getSize(), this.getSize());
-            game.textAlign(game.CENTER, game.CENTER);
-            game.textSize(14);
-            game.fill(255);
-            game.text(this.health, this.x, this.y);
+        game.fill(owner.getColor());
+        game.ellipse(this.x, this.y, this.getSize()+5, this.getSize()+5);
+
+        //
+
+        PImage image = null;
+        if (this.getName().equals("Cannon")) image = game.Cannon;
+        if (this instanceof EliteBarbarians) image = game.EliteBarbarians;
+        if (this.getName().equals("HogRider")) image = game.HogRider;
+        if (this.getName().equals("IceGolem")) image = game.IceGolem;
+        if (this.getName().equals("MainTower")) image = game.KingTower;
+        if (this.getName().equals("Knight")) image = game.Knight;
+        if (this.getName().equals("Musketeer")) image = game.Musketeer;
+        if (this.getName().equals("Skeletons")) image = game.Skeletons;
+
+
+
+        if (image == null) return;
+        PImage resizedImage = new PImage(image.getImage());
+
+        resizedImage.resize((int) this.getSize()-6, (int) this.getSize()-6);
+
+        game.image(resizedImage, this.x-((int)this.getSize() / 2) + 3, this.y-((int)this.getSize() / 2) + 3);
+
+
 
     }
 
@@ -111,13 +141,15 @@ public class Troop {
 
 
     public String getName() {
-        if(this instanceof Tower) return "Tower";
+        if(this instanceof Tower) {
+            if (this instanceof Cannon) return "Cannon";
+            else return "MainTower";
+        }
         if(this instanceof HogRider) return "HogRider";
         if(this instanceof Skeleton) return "Skeletons";
-        if(this instanceof Cannon) return "Cannon";
         if(this instanceof Musketeer) return "Musketeer";
         if(this instanceof Knight) return "Knight";
-        if(this instanceof EliteBarbarians) return "ELiteBarbarians";
+        if(this instanceof EliteBarbarians) return "EliteBarbarians";
         if(this instanceof IceGolem) return "IceGolem";
         return null;
     }
